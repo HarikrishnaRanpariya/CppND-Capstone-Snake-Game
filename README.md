@@ -17,7 +17,7 @@ In this project, you can build your own C++ application or extend this Snake gam
   * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
 * SDL2 >= 2.0
   * All installation instructions can be found [here](https://wiki.libsdl.org/Installation)
-  >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source. 
+  >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source.
 * gcc/g++ >= 5.4
   * Linux: gcc / g++ is installed by default on most Linux distros
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
@@ -30,17 +30,47 @@ In this project, you can build your own C++ application or extend this Snake gam
 3. Compile: `cmake .. && make`
 4. Run it: `./SnakeGame`.
 
+## Additional Functionality
 
-## CC Attribution-ShareAlike 4.0 International
+1. Added a Cmdline user guide to display on ternimal while playing.
+2. Added two new commands: (Condition varibale & Mutex):
+	i. 'a' key: For pausing game. (If user want to pause game in middle).
+	ii.'q' key: For resuming game from pause state.
+3. Added controller handler (handleInput()) logic in thread (Pthread).
+4. Make Generic Gmae class (Pure Virutal Function) and make SnakeGame as achild of Game class (inheritance).
+5. Applied Rule of Three in Snake class.
+6. Define renderer object as a unique pointer so throughout the game developer use same renderer object to render game and update the screen.
+7. Define SnakeCell() function with template so user can call it to compare any datatype values.
 
+## Rubric Points Addressed
 
-Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
-
-This work is licensed under a
-[Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
-
-[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
-
-[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
-[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
-[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
+1. functions and control structures:
+      1. main.cpp: lines 24
+      2. game.cpp: lines 15, 35, 103
+      3. renderer.cpp: lines 67
+	  4. Snake.cpp: lines 115, 120, 157
+2. read/write data from/to file:
+      1. game.cpp: lines 22, 117
+3. User input/output:
+      1. Controller: line 46, 50 (through SDL input)
+4. Access specifiers for class members:
+      1. game.h: lines 25, 35
+	  2. Snake.h: lines 10, 54
+5. Object Oriented Programming techniques:
+      1. game.cpp: line 59, 70
+      2. game.h: lines 24
+6. Pass by reference:
+	  1. Game.cpp: line 46
+7. Rule of Five:
+	  1. Snake.h: line 18, 19, 20, 21, 22
+	  2. Snake.cpp: line 5, 23, 41, 70, 98
+8. Smart pointer:
+	  1. main.cpp: lines 18
+7. Thread:
+	  1. Game.cpp: lines 46
+8. mutex:
+	  1. Game.cpp: lines: 12, 52, 59, 61
+	  2. Controller.cpp: lines 9, 56, 59, 63, 66, 70, 73, 77, 80
+9. Condition_variable:
+	  1. Game.cpp: lines: 13, 51, 52
+	  2. Controler.cpp: lines 10, 52

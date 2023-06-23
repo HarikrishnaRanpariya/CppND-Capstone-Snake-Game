@@ -2,12 +2,111 @@
 #include <cmath>
 #include <iostream>
 
+ Snake::Snake(const Snake& other_snake) {
+      if (this == &other_snake)
+          return;
+
+      this->updateGridWidth(other_snake.grid_width);
+      this->updateGridHeight(other_snake.grid_height);
+      this->direction = other_snake.direction;
+
+      this->speed = other_snake.speed;
+      this->size = other_snake.size;
+      this->alive = other_snake.alive;
+      this->head_x = other_snake.head_x;
+      this->head_y = other_snake.head_y;
+
+      for (int i=0; i<other_snake.body.size(); i++)
+          this->body.push_back(other_snake.body[i]);
+}
+
+Snake& Snake::operator=(const Snake& other_snake) {
+      if (this == &other_snake)
+            return *this;
+
+      this->updateGridWidth(other_snake.grid_width);
+      this->updateGridHeight(other_snake.grid_height);
+      this->direction = other_snake.direction;
+
+      this->speed = other_snake.speed;
+      this->size = other_snake.size;
+      this->alive = other_snake.alive;
+      this->head_x = other_snake.head_x;
+      this->head_y = other_snake.head_y;
+      for (int i=0; i<other_snake.body.size(); i++)
+          this->body.push_back(other_snake.body[i]);
+
+      return *this;
+}
+ Snake::Snake(Snake &&other_snake) {
+      if (this == &other_snake)
+          return;
+
+      this->updateGridWidth(other_snake.grid_width);
+      this->updateGridHeight(other_snake.grid_height);
+      this->direction = other_snake.direction;
+
+      this->speed = other_snake.speed;
+      this->size = other_snake.size;
+      this->alive = other_snake.alive;
+      this->head_x = other_snake.head_x;
+      this->head_y = other_snake.head_y;
+
+      this->body.clear();
+      for (int i=0; i<other_snake.body.size(); i++)
+          this->body.push_back(other_snake.body[i]);
+
+      other_snake.updateGridWidth(0);
+      other_snake.updateGridHeight(0);
+      other_snake.direction = Direction::kUp;
+      other_snake.speed = 0;
+      other_snake.size = 0;
+      other_snake.alive = 0;
+      other_snake.head_x = 0;
+      other_snake.head_y = 0;
+      other_snake.body.clear();
+}
+
+Snake& Snake::operator=(Snake &&other_snake) {
+      if (this == &other_snake)
+            return *this;
+
+      this->updateGridWidth(other_snake.grid_width);
+      this->updateGridHeight(other_snake.grid_height);
+      this->direction = other_snake.direction;
+
+      this->speed = other_snake.speed;
+      this->size = other_snake.size;
+      this->alive = other_snake.alive;
+      this->head_x = other_snake.head_x;
+      this->head_y = other_snake.head_y;
+      for (int i=0; i<other_snake.body.size(); i++)
+          this->body.push_back(other_snake.body[i]);
+
+      other_snake.updateGridWidth(0);
+      other_snake.updateGridHeight(0);
+      other_snake.direction = Direction::kUp;
+      other_snake.speed = 0;
+      other_snake.size = 0;
+      other_snake.alive = 0;
+      other_snake.head_x = 0;
+      other_snake.head_y = 0;
+      other_snake.body.clear();
+      return *this;
+}
+
+Snake::~Snake() {//I. destructor
+     this->body.clear();
+}
+
 void Snake::Update() {
   SDL_Point prev_cell{
       static_cast<int>(head_x),
       static_cast<int>(
           head_y)};  // We first capture the head's cell before updating.
+
   UpdateHead();
+
   SDL_Point current_cell{
       static_cast<int>(head_x),
       static_cast<int>(head_y)};  // Capture the head's cell after updating.
@@ -64,16 +163,3 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
 }
 
 void Snake::GrowBody() { growing = true; }
-
-// Inefficient method to check if cell is occupied by snake.
-bool Snake::SnakeCell(int x, int y) {
-  if (x == static_cast<int>(head_x) && y == static_cast<int>(head_y)) {
-    return true;
-  }
-  for (auto const &item : body) {
-    if (x == item.x && y == item.y) {
-      return true;
-    }
-  }
-  return false;
-}
